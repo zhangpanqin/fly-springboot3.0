@@ -1,0 +1,71 @@
+// buildcript 定义 gradle 自身的配置
+//buildscript {}
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot' version "${springBootVersion}" apply false
+}
+
+def getVersion() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+allprojects {
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            name = 'maven center 和 jcenter 阿里云'
+            url = 'https://maven.aliyun.com/repository/public'
+        }
+        maven {
+            name = 'spring 阿里云'
+            url = 'https://maven.aliyun.com/repository/spring'
+        }
+        maven {
+            name = 'google 阿里云'
+            url = 'https://maven.aliyun.com/repository/google'
+        }
+        mavenCentral()
+    }
+}
+
+subprojects {
+    subproject ->
+        apply(new Action<ObjectConfigurationAction>() {
+            @Override
+            void execute(ObjectConfigurationAction objectConfigurationAction) {
+                // 打印子项目名称
+                if (!subproject.name.contains("mflyyou-dependencies")) {
+                    objectConfigurationAction.plugin('java')
+                }
+            }
+        })
+        apply plugin: 'idea'
+        configurations.all {
+            resolutionStrategy {
+                cacheChangingModulesFor 0, 'seconds'
+            }
+        }
+
+        configurations {
+            annotationProcessor.extendsFrom(implementation)
+            compileOnly.extendsFrom(annotationProcessor)
+        }
+
+        dependencies {
+            implementation(platform(project(':mflyyou-dependencies')))
+        }
+
+
+        tasks.withType(Test) {
+            useJUnitPlatform()
+        }
+}
+
+wrapper {
+    gradleVersion = '7.4.2'
+}

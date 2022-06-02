@@ -1,0 +1,30 @@
+buildscript {
+    ext {
+        hutoolVersion = '5.8.2'
+    }
+}
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+javaPlatform {
+    allowDependencies()
+}
+dependencies {
+    api(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    constraints {
+        api "cn.hutool:hutool-all:${hutoolVersion}"
+    }
+}
+
+publishing {
+    publications {
+        myPlatform(MavenPublication) {
+            from components.javaPlatform
+            groupId = rootProject.group
+            artifactId = rootProject.platformArtifact
+            version = rootProject.platformVersion
+        }
+    }
+}

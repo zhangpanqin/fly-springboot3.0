@@ -34,36 +34,26 @@ allprojects {
 }
 
 subprojects {
-    subproject ->
-        apply(new Action<ObjectConfigurationAction>() {
-            @Override
-            void execute(ObjectConfigurationAction objectConfigurationAction) {
-                // 打印子项目名称
-                if (!subproject.name.contains("mflyyou-dependencies")) {
-                    objectConfigurationAction.plugin('java')
-                }
-            }
-        })
-        apply plugin: 'idea'
-        configurations.all {
-            resolutionStrategy {
-                cacheChangingModulesFor 0, 'seconds'
-            }
+    apply plugin: 'idea'
+    configurations.all {
+        resolutionStrategy {
+            cacheChangingModulesFor 0, 'seconds'
         }
+    }
 
-        configurations {
-            annotationProcessor.extendsFrom(implementation)
-            compileOnly.extendsFrom(annotationProcessor)
-        }
+    configurations {
+        annotationProcessor.extendsFrom(implementation)
+        compileOnly.extendsFrom(annotationProcessor)
+    }
 
-        dependencies {
-            implementation(platform(project(':mflyyou-dependencies')))
-        }
+    dependencies {
+        implementation(platform(project(':mflyyou-dependencies')))
+    }
 
 
-        tasks.withType(Test) {
-            useJUnitPlatform()
-        }
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
 }
 
 wrapper {

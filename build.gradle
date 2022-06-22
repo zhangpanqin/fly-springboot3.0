@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id 'idea'
     id 'org.springframework.boot' version "${springBootVersion}" apply false
+    id 'com.avast.gradle.docker-compose' version '0.16.4' apply false
 }
 
 def getVersion() {
@@ -53,6 +54,12 @@ subprojects {
 
     tasks.withType(Test) {
         useJUnitPlatform()
+    }
+
+    tasks.register('kafka') {
+        doLast {
+            println 'Hello world!'
+        }
     }
 }
 

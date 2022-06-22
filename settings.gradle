@@ -14,3 +14,4 @@ pluginManagement {
 rootProject.name = 'fly-springboot3.0'
 include 'mflyyou-dependencies'
 include 'example'
+include 'fly-kafka'

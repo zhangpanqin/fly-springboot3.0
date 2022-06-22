@@ -1,6 +1,8 @@
 apply plugin: 'com.avast.gradle.docker-compose'
 
 dockerCompose {
-    useComposeFiles = ["${rootProject.projectDir}/gradle/docker-compose/kafka-cluster.yaml"]
-    isRequiredBy(project.tasks.kafka)
+    kafka {
+        useComposeFiles = ["${rootProject.projectDir}/gradle/docker-compose/kafka-cluster.yaml"]
+        projectName = 'kafka'
+    }
 }

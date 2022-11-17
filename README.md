@@ -10,15 +10,16 @@ docker-compose -f ./gradle/docker-compose/kafka-cluster.yaml up -d
 docker-compose -f ./gradle/docker-compose/kafka-cluster.yaml down
 
 # 创建 topic
-docker exec kafka-0 kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+docker exec kafka-0 kafka-topics.sh --create --topic quickstart-events --bootstrap-server kafka-0:9092
 
 # 创建生产者
 docker exec --interactive --tty kafka-0 \
     kafka-console-producer.sh --bootstrap-server kafka-0:9092 \
     --topic quickstart-events
+                 
                        
 # 创建消费者
 docker exec --interactive --tty kafka-0 \
     kafka-console-consumer.sh --bootstrap-server kafka-0:9092 \
-    --topic quickstart-events --from-beginning                       
+    --topic quickstart-events --from-beginning                    
 ```

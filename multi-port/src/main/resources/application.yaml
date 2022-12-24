@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: multi-port
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

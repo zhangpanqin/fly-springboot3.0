@@ -1,13 +1,13 @@
-package com.mflyyou.example;
+package com.mflyyou.multi.port;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ExampleApplication {
+public class MultiPortApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ExampleApplication.class, args);
+        SpringApplication.run(MultiPortApplication.class, args);
     }
 
 }

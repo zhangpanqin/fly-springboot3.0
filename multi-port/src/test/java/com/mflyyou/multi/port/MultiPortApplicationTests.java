@@ -1,10 +1,10 @@
-package com.mflyyou.example;
+package com.mflyyou.multi.port;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ExampleApplicationTests {
+class MultiPortApplicationTests {
 
     @Test
     void contextLoads() {

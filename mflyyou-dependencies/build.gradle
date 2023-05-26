@@ -13,6 +13,7 @@ javaPlatform {
 }
 dependencies {
     api(platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES))
+    api(platform('org.springframework.cloud:spring-cloud-dependencies:2022.0.2'))
     constraints {
         api "cn.hutool:hutool-all:${hutoolVersion}"
     }

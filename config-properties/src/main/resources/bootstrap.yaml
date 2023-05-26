@@ -1,6 +1,6 @@
 spring:
-  application:
-    name: multi-port
+  config:
+    import: classpath:secrets-mock.yaml
 management:
   endpoints:
     web:

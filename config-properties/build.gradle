@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'org.springframework.boot'
+    id 'com.google.cloud.tools.jib'
 }
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -9,4 +10,28 @@ dependencies {
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
+}
+
+static def getVersion() {
+    return 'git rev-parse --short HEAD'.execute().text.trim()
+}
+
+def version_tag = getVersion()
+
+jib {
+    from {
+        image = 'gcr.io/distroless/java17-debian11@sha256:92f34f18951118ac1c8261c128cdf2001b4e74340050f557dcd1ac4ddd6a07ad'
+    }
+    to {
+        image = "ghcr.io/mflyyou/config-properties"
+        tags = ["${version_tag}", 'latest']
+        auth {
+            username = 'USERNAME'
+            password = System.getenv('GITHUB_PACKAGE_TOKEN') ?: ''
+        }
+    }
+    container {
+        jvmFlags = ['-XX:MaxRAMPercentage=80']
+        creationTime = 'USE_CURRENT_TIMESTAMP'
+    }
 }

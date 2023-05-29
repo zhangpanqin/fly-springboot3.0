@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
         - name: config-properties
-          image: ghcr.io/zhangpanqin/config-properties:239a8d8
+          image: ghcr.io/zhangpanqin/config-properties:e918afc
           ports:
             - name: application
               containerPort: 8080

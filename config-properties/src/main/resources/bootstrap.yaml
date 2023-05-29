@@ -5,7 +5,7 @@ spring:
     kubernetes:
       config:
         sources:
-          - config-properties
+          - name: config-properties
 management:
   server:
     port: 9090

@@ -12,29 +12,29 @@ metadata:
 spec:
   containers:
     - name: config-properties
-      image: ghcr.io/zhangpanqin/config-properties:a251187
+      image: ghcr.io/zhangpanqin/config-properties:b382c15
       imagePullPolicy: IfNotPresent
       ports:
-        - name: http
+        - name: application
           containerPort: 8080
           protocol: TCP
         - name: actuator
           containerPort: 9090
           protocol: TCP
-      readinessProbe:
-        httpGet:
-          port: 9090
-          path: /actuator/health/readiness
-        initialDelaySeconds: 10
-      livenessProbe:
-        httpGet:
-          port: 9090
-          path: /actuator/health/liveness
-        initialDelaySeconds: 10
+      #      readinessProbe:
+      #        httpGet:
+      #          port: 9090
+      #          path: /actuator/health/readiness
+      #        initialDelaySeconds: 10
+      #      livenessProbe:
+      #        httpGet:
+      #          port: 9090
+      #          path: /actuator/health/liveness
+      #        initialDelaySeconds: 10
       resources:
         limits:
-          cpu: 2m
-          memory: 512Mi
-        requests:
-          cpu: 1m
+          cpu: 500m
           memory: 256Mi
+        requests:
+          cpu: 200m
+          memory: 128Mi

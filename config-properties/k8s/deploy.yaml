@@ -4,37 +4,63 @@ kind: Namespace
 metadata:
   name: mflyyou-dev
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: config-properties
   namespace: mflyyou-dev
 spec:
-  containers:
-    - name: config-properties
-      image: ghcr.io/zhangpanqin/config-properties:b382c15
-      imagePullPolicy: IfNotPresent
-      ports:
-        - name: application
-          containerPort: 8080
-          protocol: TCP
-        - name: actuator
-          containerPort: 9090
-          protocol: TCP
-      #      readinessProbe:
-      #        httpGet:
-      #          port: 9090
-      #          path: /actuator/health/readiness
-      #        initialDelaySeconds: 10
-      #      livenessProbe:
-      #        httpGet:
-      #          port: 9090
-      #          path: /actuator/health/liveness
-      #        initialDelaySeconds: 10
-      resources:
-        limits:
-          cpu: 500m
-          memory: 256Mi
-        requests:
-          cpu: 200m
-          memory: 128Mi
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: config-properties
+      app.kubernetes.io/instance: config-properties
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: config-properties
+        app.kubernetes.io/instance: config-properties
+    spec:
+      containers:
+        - name: config-properties
+          image: ghcr.io/zhangpanqin/config-properties:239a8d8
+          ports:
+            - name: application
+              containerPort: 8080
+              protocol: TCP
+            - name: actuator
+              containerPort: 9090
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              port: 9090
+              path: /actuator/health/readiness
+            initialDelaySeconds: 10
+          livenessProbe:
+            httpGet:
+              port: 9090
+              path: /actuator/health/liveness
+            initialDelaySeconds: 10
+          resources:
+            limits:
+              cpu: 500m
+              memory: 256Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-properties
+  namespace: mflyyou-dev
+  labels:
+    spring.cloud.kubernetes.config: "true"
+data:
+  application.yaml: |-
+    spring:
+      application:
+        name: config-properties
+    configmap:
+      name: peter
+      age: 19

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
     private final DatabaseProperties databaseProperties;
     private final AppProperties appProperties;
+    private final ConfigmapProperties configmapProperties;
 
     @GetMapping("/demo")
     public DatabaseProperties demo() {
@@ -18,6 +19,11 @@ public class DemoController {
     @GetMapping("/app")
     public AppProperties app() {
         return appProperties;
+    }
+
+    @GetMapping("/configmap")
+    public ConfigmapProperties configmap() {
+        return configmapProperties;
     }
 }
 

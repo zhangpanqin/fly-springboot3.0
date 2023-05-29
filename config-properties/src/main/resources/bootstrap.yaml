@@ -1,6 +1,11 @@
 spring:
   config:
     import: classpath:secrets-mock.yaml
+  cloud:
+    kubernetes:
+      config:
+        sources:
+          - config-properties
 management:
   server:
     port: 9090
